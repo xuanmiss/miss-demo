@@ -1,5 +1,8 @@
 package com.miss.hello.handler;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -20,16 +23,18 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 public class HelloHandler {
 
     public Mono<ServerResponse> hello(ServerRequest serverRequest) {
+
         return ok().contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(new HashMap(){
                     {
                         put("code",200);
                         put("msg","请求成功");
                         put("data",new HashMap(){
-                            {
-                                put("hello","hello-world");
-                            }
-                        });
+                        {
+                            put("osName",System.getProperty("os.name"));
+                        }
+                    });
+//                        put("data",System.getProperties());
                     }
                 }),Map.class);
     }
